@@ -1,18 +1,24 @@
 {
-	"Version": "2012-10-17",
-	"Statement": [
-		{
-			"Sid": "IPAllow",
-			"Effect": "Deny",
-			"Principal": "*",
-			"Action": "s3:*",
-			"Resource": [
-				"arn:aws:s3:::bucket",
-				"arn:aws:s3:::bucket/*"
-			],
-			"Condition": {
-				"NotIpAddress": {"aws:SourceIp": "x.x.x.0/24"}
-			}
-		}
-	]
+    "Version": "2012-10-17",
+    "Id": "SourceIP",
+    "Statement": [
+        {
+            "Sid": "SourceIP",
+            "Effect": "Deny",
+            "Principal": "*",
+            "Action": [
+                "s3:PutObject",
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::bucket",
+                "arn:aws:s3:::bucket/*"
+            ],
+            "Condition": {
+                "NotIpAddress": {
+                    "aws:SourceIp": "ip/32"
+                }
+            }
+        }
+    ]
 }
